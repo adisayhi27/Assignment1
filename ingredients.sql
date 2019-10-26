@@ -1,0 +1,1 @@
+CREATE VIEW IF NOT EXISTS test_db.ingredients_vw AS SELECT id_ingredient, ingredient_name, price, timestamp, deleted FROM (SELECT id_ingredient, ingredient_name, price, timestamp, deleted, rank() over (partition by id_ingredient,ingredient_name order by timestamp desc) as rnk FROM test_db.ingredients) ing WHERE ing.rnk = 1 and deleted = 0;
